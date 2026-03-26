@@ -1,0 +1,35 @@
+#![no_std]
+#![no_main]
+
+use defmt::*;
+use defmt_rtt as _; // <- RTT logging
+                    // use defmt_serial as _;
+                    // use defmt_panic as _;
+use embassy_executor::Spawner;
+use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_time::{Duration, Timer};
+use panic_halt as _;
+use panic_probe as _;
+
+//#[defmt::panic_handler]
+//fn panic() -> ! {
+//    cortex_m::asm::udf()
+//}
+//
+
+#[embassy_executor::main]
+async fn main(_spawner: Spawner) {
+    info!("🔌 Hello from Embassy STM32!");
+    let p = embassy_stm32::init(Default::default());
+    let mut led = Output::new(p.PA6, Level::Low, Speed::Low);
+
+    loop {
+        info!("🔆 LED on");
+        led.set_high();
+        Timer::after(Duration::from_millis(500)).await;
+
+        info!("🌑 LED off");
+        led.set_low();
+        Timer::after(Duration::from_millis(500)).await;
+    }
+}

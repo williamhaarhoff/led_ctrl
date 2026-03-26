@@ -1,0 +1,32 @@
+[package]
+name = "spray"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7"
+defmt-serial = "0.10.0"
+static_cell = "2"
+ux = { version = "0.1.6" }
+embassy-stm32 = { version = "0.3.0", features = ["defmt", "rt", "stm32f446ve", "time-driver-tim2", "exti", "unstable-pac"] }
+embassy-executor = { version = "0.8.0", features = ["arch-cortex-m", "executor-thread", "defmt"] }
+embassy-time = { version = "0.4.0", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-1_000_000"] }
+embedded-hal = { version = "1.0.0"}
+embassy-sync = { version = "0.7.2", features = []}
+embassy-futures = { version = "0.1.2", features = ["defmt"]}
+portable-atomic = { version = "1", features = ["critical-section"] }
+#embassy-time-driver = { version = "0.1.0" }
+heapless = { version = "0.8", default-features = false }
+defmt = "1.0.1"
+defmt-rtt = "1.0.0"
+#defmt-panic = "1.0"
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+
+[features]
+default = []
+
+[profile.dev]
+debug = true
+opt-level = 3 
+lto = true

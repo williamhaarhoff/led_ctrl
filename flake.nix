@@ -98,6 +98,8 @@
             (python3.withPackages (ps: with ps; [pyocd]))
           ];
           shellHook = ''
+
+            export CARGO_TARGET_THUMBV7M_NONE_EABI_LINKER=arm-none-eabi-ld
             export CARGO_TARGET=thumbv7m-none-eabi
             export DEFMT_LOG=trace
             echo "🔧 Target     : $CARGO_TARGET"

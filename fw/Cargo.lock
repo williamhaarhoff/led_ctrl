@@ -614,7 +614,6 @@ dependencies = [
  "embassy-time",
  "embedded-hal 1.0.0",
  "heapless 0.8.0",
- "panic-halt",
  "panic-probe",
  "portable-atomic",
  "static_cell",
@@ -650,12 +649,6 @@ checksum = "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841"
 dependencies = [
  "autocfg",
 ]
-
-[[package]]
-name = "panic-halt"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a513e167849a384b7f9b746e517604398518590a9142f4846a32e3c2a4de7b11"
 
 [[package]]
 name = "panic-probe"

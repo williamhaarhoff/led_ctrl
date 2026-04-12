@@ -26,7 +26,7 @@
         # Select toolchain from rust-toolchain.toml
         rustToolchain = fenix.packages.${system}.fromToolchainFile {
           file = ./rust-toolchain.toml;
-          sha256 = "sha256-qqF33vNuAdU5vua96VKVIwuc43j4EFeEXbjQ6+l4mO4=";
+          sha256 = "sha256-zC8E38iDVJ1oPIzCqTk/Ujo9+9kx9dXq7wAwPMpkpg0=";
         };
 
         craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
@@ -73,11 +73,6 @@
             '';
           });
 
-        bootloaders = pkgs.runCommand "bootloaders" {} ''
-          mkdir -p $out/bootloaders
-          cp ${./fw/utils/gt_can_bootloader} $out/bootloaders/gt_can_bootloader
-        '';
-
         # expression for the devshell
         devShell = pkgs.mkShell {
           name = "led-rust-dev";
@@ -113,14 +108,12 @@
           runtimeInputs = [pkgs.stlink pkgs.openocd];
           text = ''
             echo "Resetting and erasing..."
-            openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "reset_config srst_only \
+            openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "reset_config srst_only \
             srst_nogate connect_assert_srst" -c "init" -c "reset halt;" -c 'flash erase_sector 0 0 last; reset' -c 'shutdown'
-            echo "Flashing bootloader..."
-            openocd -f interface/stlink.cfg -f target/stm32f4x.cfg \
-              -c "program ${bootloaders}/bootloaders/gt_can_bootloader verify reset exit"
+
             echo "Flashing firmware..."
-            openocd -f interface/stlink.cfg -f target/stm32f4x.cfg \
-              -c "program ${firmware}/firmware/window verify reset exit"
+            openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
+              -c "program ${firmware}/firmware/led_ctrl verify reset exit"
             echo "done!"
           '';
         };

@@ -1,4 +1,4 @@
 [toolchain]
-channel = "stable"
+channel = "1.94.1"
 components = ["rust-src", "rustfmt", "clippy", "rust-analyzer"]
 targets = ["thumbv7m-none-eabi"]
